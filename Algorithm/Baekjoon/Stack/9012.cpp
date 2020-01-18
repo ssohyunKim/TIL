@@ -25,7 +25,6 @@ int main(void){
     for(int i=t; i>0; i--){
         string s;
         cin >> s;
-
         cout << check(s) << endl;
     }
 }
