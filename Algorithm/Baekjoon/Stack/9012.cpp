@@ -1,30 +1,37 @@
 #include <stdio.h>
 #include <iostream>
+#include <stack>
 
 using namespace std;
 
-string check(string s) {
-    int count = 0;
+bool check(string s) {
+    stack<char> a;
+
     for (int i=0; i<s.size(); i++){
         if(s[i] == '('){
-            count++;
+            a.push(s[i]);
         }else{
-            count--;
+            if(!a.empty()){
+                a.pop();
+            }else{ 
+                return false;
+            }
         }
     }
-    if(count==0){
-        return "YES";
-    }else {
-        return "NO";
-    }
+   return a.empty;
 }
 int main(void){
     int t;
     cin >> t;
 
-    for(int i=t; i>0; i--){
+    for(int i=0; i<t; i++){
         string s;
         cin >> s;
-        cout << check(s) << endl;
+        
+        if(check(s)){
+            cout << "YES" << endl;
+        }else {
+            cout << "NO" << endl;
+        }
     }
 }
