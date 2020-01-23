@@ -24,10 +24,19 @@ int main(int argc, const char * argv[]) {
         n += money/a[i];
         money = money - a[i]*(money/a[i]);
     }
+
+// 또 다른 풀이
+//    for(int i=0; i<6; i++){
+//        if(a[i] <= money){
+//            money -= a[i];
+//            n++;
+//            i--;
+//            if(money == 0){
+//                break;
+//            }
+//        }
+//    }
     
     cout << n << "\n";
     return 0;
 }
-
-
-
