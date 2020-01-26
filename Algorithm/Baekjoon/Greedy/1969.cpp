@@ -1,7 +1,21 @@
 #include <stdio.h>
 #include <iostream>
+#include <string>
 #include <algorithm>
 using namespace std;
+//답은 맞는데 왜 틀린지 모르겠다
+
+char check(int a, int t, int g, int c, int MAX){
+    if(MAX == a){
+        return 'A';
+    }else if(MAX == t){
+        return 'T';
+    }else if(MAX == g){
+        return 'G';
+    }else{
+        return 'C';
+    }
+}
 
 int main(int argc, const char * argv[]) {
     // insert code here...
@@ -9,6 +23,7 @@ int main(int argc, const char * argv[]) {
     int a,t,g,c;
     int sum = 0;
     int MAX;
+    string dna="";
     cin >> n >> m;
     
     char arr[n][m];
@@ -37,10 +52,10 @@ int main(int argc, const char * argv[]) {
                     break;
             }
         }
-        cout << max(a,max(t,max(g,c))) << "\n";
         MAX = max(a,max(t,max(g,c)));
         sum += (n - MAX);
+        dna += check(a,t,g,c,MAX);
     }
-    cout << sum; //haming distance의 합
+    printf("%s\n%d",dna.c_str(),sum);
     return 0;
 }
