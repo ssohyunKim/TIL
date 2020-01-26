@@ -1,22 +1,22 @@
 #include <iostream>
-//¼Ò¼ö 
+//ï¿½Ò¼ï¿½ 
 using namespace std;
-int n, array[100], count;
+int n, arr[100], cnt;
 bool prime(int n);	
 
 int main(){
-	count = 0;
+	cnt = 0;
 	cin >> n;
 	
 	for(int i = 0; i < n; i++){
-		cin >> array[i];
+		cin >> arr[i];
 	
-		if(prime(array[i])==true){
-			count +=1;
+		if(prime(arr[i])==true){
+			cnt +=1;
 		}
 	}
 	
-	cout << count;
+	cout << cnt;
 	
 	return 0;
 }
