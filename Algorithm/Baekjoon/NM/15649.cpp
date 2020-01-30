@@ -1,13 +1,9 @@
 #include <iostream>
-#include <string>
-#include <stdio.h>
-#include <algorithm>
-
 #define MAX 9
 using namespace std;
 
 int arr[MAX];
-bool select[MAX];
+bool check[MAX];
 int n, m;
 
 void DFS(int cnt){
@@ -19,13 +15,13 @@ void DFS(int cnt){
         return;
     }
     for(int i=1; i<=n; i++){
-        if(select[i] == true){
+        if(check[i] == true){
             continue;
         }else{
-            select[i] = true;
+            check[i] = true;
             arr[cnt] = i;
             DFS(cnt+1);
-            select[i] = false;
+            check[i] = false;
         }
     }
 }
