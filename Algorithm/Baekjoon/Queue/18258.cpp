@@ -10,45 +10,29 @@ int main(int argc, const char * argv[]) {
     queue<int> q;
     int n;
     int num;
+    char s[7];
 
     cin >> n;
     for(int i=0; i<n; i++){
-        string s;
         cin >> s;
-        if(s=="push"){
+        if(s[1]=='u'){
             cin >> num;
             q.push(num);
-        }else if(s=="pop"){
+        }else if(s[1]=='o'){
             if(!q.empty()){
-                cout << q.front();
+                cout << q.front() <<"\n";
                 q.pop();
             }else{
-                cout << -1;
+                cout << -1 << "\n";
             }
-            cout << "\n";
-        }else if(s=="size"){
-            cout << q.size() <<"\n";
-        }else if(s=="empty"){
-            if(q.empty()){
-                cout << 1;
-            }else{
-                cout << 0;
-            }
-            cout << "\n";
-        }else if(s=="front"){
-            if(!q.empty()){
-                cout << q.front();
-            }else{
-                cout << -1;
-            }
-            cout << "\n";
-        }else if(s=="back"){
-            if(!q.empty()){
-                cout << q.back();
-            }else{
-                cout << -1;
-            }
-            cout << "\n";
+        }else if(s[1]=='i'){
+            cout << q.size() << "\n";
+        }else if(s[1]=='m'){
+            cout << (q.empty() ? 1:0) << "\n";
+        }else if(s[1]=='r'){
+            cout << (q.empty() ? -1:q.front()) <<"\n";
+        }else if(s[1]=='a'){
+            cout << (q.empty() ? -1:q.back()) << "\n";
         }
     }
     return 0;
