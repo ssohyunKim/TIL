@@ -1,19 +1,30 @@
 #include <iostream>
+#include <algorithm>
 using namespace std;
 #define MAX 100000
 
 int arr[MAX];
 int n,m;
+bool check = false;
 
-bool check(int a){
-    for(int i=0; i<n; i++){
-        if(arr[i]==a){
-            return true;
+void BinarySearch(int key){
+    int first = 0;
+    int last = n-1;
+    int mid = 0;
+
+    while(first <= last){
+        mid = (first+last)/2;
+        if(arr[mid] == key){
+            check = true;
+            return;
+        }else if(arr[mid] > key){
+            last = mid -1;
         }else{
-            continue;
+            first = mid +1;
         }
     }
-    return false;
+    check = false;
+    return;
 }
 int main(int argc, const char * argv[]) {
     // insert code here...
@@ -26,10 +37,14 @@ int main(int argc, const char * argv[]) {
         cin >> arr[i];
     }
     
+    sort(arr, arr+n);
+    
     cin >> m;
     for(int i=0; i<m; i++){
         cin >> num;
-        if(check(num)){
+        BinarySearch(num);
+        
+        if(check){
             cout << 1 << "\n";
         }else{
             cout << 0 << "\n";
