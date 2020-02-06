@@ -1,0 +1,7 @@
+SELECT NAME
+FROM ANIMAL_INS
+WHERE 1=1 
+ORDER BY DATETIME 
+LIMIT 1
+
+--- TOP 키워드 사용하면 실행 결과 에러나온다. ---
