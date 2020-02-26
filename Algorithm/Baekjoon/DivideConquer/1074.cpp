@@ -38,3 +38,65 @@ int main(int argc, const char * argv[]) {
     return 0;
 }
 
+// +) 다른 풀이
+// #include <iostream>
+// #include <algorithm>
+// #include <vector>
+// #include <queue>
+// #include <string>
+// #include <math.h>
+// using namespace std;
+// int res=0;
+// int N,R,C;
+
+// void solve(int n, int r, int c)
+// {
+//    if(n==2)
+//    {
+//       //찾으려던 곳일 경우 
+//       if(r==R && c==C)
+//       {
+//          cout << res;
+//          return;
+//       }
+//       res++;
+//       if(r==R && c+1==C)
+//       {
+//          cout << res;
+//          return;
+//       }
+//       res++;
+//       if(r+1==R && c==C)
+//       {
+//          cout << res;
+//          return;
+//       }
+//       res++;
+//       if(r+1==R && c+1==C)
+//       {
+//          cout << res;
+//          return;
+//       }
+//       res++;
+//       return;
+      
+//    }
+//    //분할 된 부분의 첫부분을 재귀로 넘겨줌 
+//    solve(n/2, r, c);
+//    solve(n/2, r, c+n/2);
+//    solve(n/2, r+n/2, c);
+//    solve(n/2, r+n/2, c+n/2);   
+// }
+
+
+// int main() {
+//    //freopen("input.txt", "rt", stdin);
+//    ios_base::sync_with_stdio(false);
+//    cin.tie(0);
+   
+//    cin >> N >> R >> C;
+   
+//    solve(pow(2, N), 0 , 0);    
+//    return 0;
+
+// }
