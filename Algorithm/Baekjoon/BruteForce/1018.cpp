@@ -9,31 +9,25 @@ int n,m;
 char map[MAX][MAX];
 int result = 9999999;
 void paint(int x, int y){
-    int cnt = 0;
-    int color = map[x][y];
-    if((x + y) % 2 == 0){ // x+y가 짝수일때
-        for(int i=x; i<x+8; i++){
-            for(int j=y; j<y+8; j++){
-                if((i + j) % 2 == 0 && map[i][j] != color ){ // 짝수에 다른 색일 때
-                    cnt ++;
-                }else if((i + j) % 2 != 0 && map[i][j] == color){ //홀수에 같은 색일 때
-                    cnt ++;
-                }
-            }
-        }
-    }else{ // 홀수일때
-        for(int i=x; i<x+8; i++){
-            for(int j=y; j<y+8; j++){
-                if((i + j) % 2 == 0 && map[i][j] == color ){ // 짝수에 같은 색일 때
-                    cnt ++;
-                }else if((i + j) % 2 != 0 && map[i][j] != color){ //홀수에 다른 색일 때
-                    cnt ++;
-                }
+    int cntW = 0;
+    int cntB = 0;
+    for(int i=x; i<x+8; i++){
+        for(int j=y; j<y+8; j++){
+            if((i + j) % 2 == 0){ // 짝수
+                if(map[i][j] == 'B')
+                    cntW ++;
+                else
+                    cntB ++;
+            }else {               // 홀수
+                if(map[i][j] == 'B')
+                    cntB ++;
+                else
+                    cntW ++;
             }
         }
     }
-    //cout << "@" << cnt << '\n';
-    result = min(result, cnt);
+    result = min(result, cntB);
+    result = min(result, cntW);
 }
 
 int main(int argc, const char * argv[]) {
@@ -62,3 +56,4 @@ int main(int argc, const char * argv[]) {
     
     return 0;
 }
+
