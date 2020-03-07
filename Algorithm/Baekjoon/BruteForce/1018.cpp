@@ -11,17 +11,27 @@ int result = 9999999;
 void paint(int x, int y){
     int cntW = 0;
     int cntB = 0;
+    
+    // B로 시작일때
+    for(int i=x; i<x+8; i++){
+        for(int j=y; j<y+8; j++){
+            if((i + j) % 2 == 0){ // 짝수
+                if(map[i][j] == 'W')
+                    cntB ++;
+            }else {               // 홀수
+                if(map[i][j] == 'B')
+                    cntB ++;
+            }
+        }
+    }
+    // W로 시작일때
     for(int i=x; i<x+8; i++){
         for(int j=y; j<y+8; j++){
             if((i + j) % 2 == 0){ // 짝수
                 if(map[i][j] == 'B')
                     cntW ++;
-                else
-                    cntB ++;
             }else {               // 홀수
-                if(map[i][j] == 'B')
-                    cntB ++;
-                else
+                if(map[i][j] == 'W')
                     cntW ++;
             }
         }
@@ -56,4 +66,5 @@ int main(int argc, const char * argv[]) {
     
     return 0;
 }
+
 
