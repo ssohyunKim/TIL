@@ -55,7 +55,7 @@ void bfs(){
         for(int i=0; i<4; i++){
             int nx = x + dx[i];
             int ny = y + dy[i];
-            if(nx<0 || ny<0 || nx>=n || ny>=n) continue;
+            if(nx<0 || ny<0 || nx>=n || ny>=m) continue;
             
             // 벽 세우기
             if(temp[nx][ny]==0){
@@ -64,6 +64,7 @@ void bfs(){
             }
         }
     }
+    
     // 안전구역의 개수 세기
     int safe=0;
     for(int i=0; i<n; i++) {
@@ -90,15 +91,16 @@ int main(int argc, const char *argv[])
         }
     }
 
-    for(int i=0; i<n; i++){
-        for(int j=0; j<m; j++){
-            if(map[i][j]==0){ 
-                map[i][j] = 1;
-                dfs(1);
-                map[i][j] = 0;
-            }
-        }
-    }
+    // for(int i=0; i<n; i++){
+    //     for(int j=0; j<m; j++){
+    //         if(map[i][j]==0){
+    //             map[i][j] = 1;
+    //             dfs(1);
+    //             map[i][j] = 0;
+    //         }
+    //     }
+    // }
+    dfs(0);
 
     cout << ans << "\n";
 
