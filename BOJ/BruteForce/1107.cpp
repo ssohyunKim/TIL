@@ -44,7 +44,7 @@ int main()
     int ans = n - 100;
     if (ans < 0)
     {
-        ans -= ans;
+        ans = -ans;
     }
     for (int i = 0; i <= 1000000; i++)
     {
