@@ -36,4 +36,4 @@ int main(int argc, const char *argv[])
     cout << d[1] << '\n';
 
     return 0;
-}ß
+}
