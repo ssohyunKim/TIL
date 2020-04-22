@@ -1,125 +1,120 @@
 #include <iostream>
-#include <queue>
-#include <algorithm>
+#include <vector>
+#include <string>
 
 using namespace std;
+const int LIMIT = 10;
+int dx[] = {0,0,-1,1};
+int dy[] = {-1,1,0,0};
 
-int n, m;
-int rx, ry, bx, by; // 공의 위치
-int hx, hy; // 구멍 위치
-bool flag;
-char map[10][10];
-bool visitied[10][10][10][10];
-int cnt = 0; 
-queue<pair<int,int> > r;
-queue<pair<int,int> > b;
+vector<int> gen(int k){
+    vector<int> a(LIMIT);
+    for(int i=0; i<LIMIT; i++){
+        a[i] = k%4; // a[i] = (k&3) 과 같다.
+        k /=4; // k>> 2; 비트를 오른쪽으로 두번 이동
+    }
+    return a;
+}
+pair<bool, bool> simulate(vector<string> &a, int k, int &x, int &y){
+    if(a[x][y] == '.') return make_pair(false, false);
+    int n = a.size();
+    int m = a[0].size();
+    bool moved = false;
+    while(true){
+        int nx = x + dx[k];
+        int ny = y + dy[k];
+        if(nx <0 || ny < 0 || nx >= n || ny >=m){
+             return make_pair(moved, false);
+        }
+        if(a[nx][ny == '#']){  // 다음 칸의 상태가 벽
+            return make_pair(moved, false);
+        }else if(a[nx][ny == 'R'] || a[nx][ny == 'B']){ // 다음 칸에 구슬이 있는 경우 이동안됨
+            return make_pair(moved, false);
+        }else if(a[nx][ny == '.']) { // 빈칸이 있으면 이동
+            swap(a[nx][ny], a[x][y]); // R . => .R
+            x = nx;
+            y = ny;
+            moved = true;
+        } else if(a[nx][ny == '0']){ // 구멍에 빠졌으면 빈칸으로 만들어준다
+            a[x][y] = '.';
+            moved = true;
+            return make_pair(moved, true);
+        }
+    }
+    return make_pair(false, false);  
+}
+int check(vector<string> a, vector<int> &dir){
+    int n = a.size();
+    int m = a[0].size();
+    int hx, hy, rx, ry, bx, by;
+    for(int i=0; i<n; i++) {
+        for(int j=0; j<m; j++){
+            if(a[i][j] == 'O'){  // 구멍의 위치
+                hx = i; hy = j;
+            } else if(a[i][j] == 'R'){ // 빨간 구슬의 위치
+                rx = i; ry = j;
+            } else if(a[i][j] == 'B'){ // 파란 구슬의 위치
+                bx = i; by = j;
+            } 
+        }
+    }
+    int cnt = 0;
+    for(int k : dir){
+        cnt += 1;  // 움직인 횟수 저장
+        bool hole1 = false, hole2 = false;  // 빨간 구슬이 구멍에 빠졌는지 체크, 파란구슬이 구멍에 빠졌는지 체크
+        while(true){
+            auto p1 = simulate(a, k, rx, ry);  // 리턴 값 = (움직였는 지, 구멍에 빠졌는 지)
+            auto p2 = simulate(a, k, bx, by);
+            if(p1.first == false && p2.first == false){  // 빨간 구슬, 파란 구슬 안움직이면
+                break;
+            }
+            if(p1.second) hole1 = true; //빨간 구슬이 구멍에 빠졌을 때 
+            if(p2.second) hole2 = true; //파란 구슬이 구멍에 빠졌을 때 
+        }
+        if(hole2) return -1;
+        if(hole1) return cnt;
+    }
+    return -1;
+}
+bool valid(vector<int> &dir){
+    int l = dir.size();
+    for(int i=0; i+1 <l; i++){
+        // 반대 방향 체크
+        if(dir[i] == 0 && dir[i+1] == 1) return false;
+        if(dir[i] == 1 && dir[i+1] == 0) return false;
+        if(dir[i] == 2 && dir[i+1] == 3) return false;
+        if(dir[i] == 3 && dir[i+1] == 2) return false;
+        // 같은 방향 체크
+        if(dir[i] == dir[i+1]) return false;
+    }
+}
 
-// 상, 하, 좌, 우
-int dx[4] = {0,0,-1,1};
-int dy[4] = {-1,1,0,0};
-
-// 1. 빨간 구슬 이동시키기
-// 2. 파란 구슬 이동시키기
-
-int main(int argc, const char * argv[]) {
+int main(int argc, const char *argv[])
+{
     // insert code here...
     ios_base::sync_with_stdio(false);
     cin.tie(0);
-    
+
+    int n, m;
     cin >> n >> m;
-
-    for(int i=0; i<n; i++){
-        for(int j=0; j<m; j++){
-            cin >> map[i][j];
-            if(map[i][j] == 'R'){
-                r.push(make_pair(i, j)); // 빨간 구슬 위치 저장
-            }else if(map[i][j] == 'B'){
-                b.push(make_pair(i, j)); // 파란 구슬 위치 저장
-            }
-        }
-    }
-
-    visited[rx][ry][bx][by] = true;
-
-    while (!r.empty())
+    vector<string> a(n);
+    for (int i = 0; i < n; i++)
     {
-        int qsize = r.size();
- 
-        while (qsize--)
-        {
-            rx = r.front().first;
-            ry = r.front().second;
-            bx = b.front().first;
-            by = b.front().second;
-            r.pop(); b.pop();
- 
-            if (cnt > 10) { // 10번 초과하면 
-                break;
-            }
-           
-            if (rx == hx && ry == hy) {  // 빨간 구슬이 구멍에 빠지면 
-                flag = true; 
-                break;
-            }
- 
-            for (int i = 0; i < 4; i++)
-            {
-                int nrx = rx + dx[i];
-                int nry = ry + dy[i];
-                int nbx = bx + dx[i];
-                int nby = by + dy[i];
- 
-                // 상하좌우 방향으로 구슬 움직이기
-                while (1)
-                {
-                    if (board[nrx][nry] == '#') {
-                        nrx -= dx[i]; 
-                        nry -= dy[i];
-                        break;
-                    }
-                    if (board[nrx][nry] == 'O') break;
-                    nrx += dx[i]; 
-                    nry += dy[i];
-                }
-                while (1)
-                {
-                    if (board[nbx][nby] == '#') {
-                        nbx -= dx[i]; 
-                        nby -= dy[i];
-                        break;
-                    }
-                    if (board[nbx][nby] == 'O') break;
-                    nbx += dx[i]; 
-                    nby += dy[i];
-                }
- 
-                // 파란 구슬이 구멍에 빠지면 continue
-                if (nbx == hx && nby == hy) continue;
- 
-                // 같은 위치에 두 개의 구슬이 있으면 위치 갱신
-                if (nrx == nbx && nry == nby)
-                {
-                    switch (i){
-                    case 0: rx > bx ? nrx++ : nbx++; break;
-                    case 1: rx < bx ? nrx-- : nbx--; break;
-                    case 2: ry > by ? nry++ : nby++; break;
-                    case 3: ry < by ? nry-- : nby--; break;
-                    }
-                }
-                
-                // 방문했던 지점이 아니면 push
-                if (visited[nrx][nry][nbx][nby]) continue;
-                r.push(make_pair(nrx, nry));
-                b.push(make_pair(nbx, nby));
-                visited[nrx][nry][nbx][nby] = true;
-            }
-        }
-        if (flag) break;
-        else cnt++;
+        cin >> a(n);
     }
- 
-    if (flag) cout << cnt;
-    else cout << -1;
+    int ans = -1;
+    for (int k = 0; k < (1 << (LIMIT * 2)); k++)
+    {
+        vector<int> dir = gen(k);
+        if (!valid(dir)) // 같은 방향으로 연속해서 두번 이동하거나, 한 방향으로 이동한 다음 반대 방향으로 이동하는 경우가 아닐 때
+            continue;
+        int cur = check(a, dir);
+        if (cur == -1)
+            continue;
+        if (ans == -1 || ans > cur)
+            ans = cur;
+    }
+    cout << ans << "\n";
 
     return 0;
 }
