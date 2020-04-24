@@ -1,20 +1,37 @@
 #include <iostream>
-using namespace std;
-#define MAX 8
 
-int arr[MAX];
-int n,m;
-void DFS(int index, int cnt){
+#define MAX 9
+using namespace std;
+
+int num[MAX];
+bool visited[MAX];
+int n, m;
+
+// 1부터 N까지 자연수 중에서 중복 없이 M개를 고른 수열
+// 고른 수열은 오름차순이어야 한다.
+
+void dfs(int cnt){
+    //cout << "debug:" << " dfs(" << cnt << ")\n";
     if(cnt == m){
-        for(int i=0; i<m; i++){
-            cout << arr[i] << " ";
+        // 오름차순인지 체크
+        for(int i=0; i < m-1; i++){
+            if(num[i] > num[i+1]) return;
+        }
+        // 출력
+        for(int i = 0; i < m; i++){
+            cout << num[i] << " ";
         }
         cout << "\n";
         return;
     }
-    for(int i=index; i<n; i++){
-        arr[cnt] = i+1;
-        DFS(i+1, cnt+1);
+    for(int i = 1; i <= n; i++){
+        // 이미 방문했으면 스킵
+        if(!visited[i]){
+            visited[i] = true;
+            num[cnt] = i;
+            dfs(cnt+1);
+            visited[i] = false;
+        }        
     }
 }
 int main(int argc, const char * argv[]) {
@@ -24,7 +41,7 @@ int main(int argc, const char * argv[]) {
     
     cin >> n >> m;
     
-    DFS(0, 0);
+    dfs(0);
     
     return 0;
 }
