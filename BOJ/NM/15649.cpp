@@ -1,27 +1,31 @@
 #include <iostream>
+
 #define MAX 9
 using namespace std;
 
-int arr[MAX];
-bool check[MAX];
+int num[MAX];
+bool visited[MAX];
 int n, m;
 
-void DFS(int cnt){
+// 1부터 N까지 자연수 중에서 중복 없이 M개를 고른 수열
+
+void dfs(int cnt){
+    //cout << "debug:" << " dfs(" << cnt << ") \n";
     if(cnt == m){
-        for(int i=0; i<m; i++){
-            cout << arr[i] << " ";
+        // 출력
+        for(int i = 0; i < m; i++){
+            cout << num[i] << " ";
         }
         cout << "\n";
         return;
     }
-    for(int i=1; i<=n; i++){
-        if(check[i] == true){
-            continue;
-        }else{
-            check[i] = true;
-            arr[cnt] = i;
-            DFS(cnt+1);
-            check[i] = false;
+    for(int i = 1; i <= n; i++){
+        // 이미 방문했으면 스킵
+        if(!visited[i]){
+            visited[i] = true;
+            num[cnt] = i;
+            dfs(cnt+1);
+            visited[i] = false;
         }
     }
 }
@@ -32,11 +36,7 @@ int main(int argc, const char * argv[]) {
 
     cin >> n >> m;
     
-//    for(int i=0; i<n; i++){
-//        arr[i] = i+1;
-//    }
-    
-    DFS(0);
+    dfs(0);
     
     return 0;
 }
