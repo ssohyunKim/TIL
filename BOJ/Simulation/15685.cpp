@@ -14,7 +14,7 @@ int dy[] = {0, -1, 0, 1};
 
 vector<int> dragon; //이전 세대의 방향정보를 저장하는 배열
 
-//1.
+//드래곤 커브 만들기
 void curve(vector<int> &dragon)
 {
     int size = (int)dragon.size();
@@ -62,7 +62,7 @@ int main(int argc, const char *argv[])
         }
     }
 
-    // 2.
+    // 정사각형 개수 세기
     for (int i = 0; i <= 101 - 2; i++)
     {
         for (int j = 0; j <= 101 - 2; j++)
