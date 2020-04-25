@@ -7,7 +7,7 @@ using namespace std;
 int n, m, h, ans;
 int ladder[31][11];
 
-//사다리탈 수 있는지 없는지 체크하기 위한 함수
+// 사다리탈 수 있는지 없는지
 bool check(){
     bool flag = true;
     for(int i = 1; i <= n; i++){
@@ -27,7 +27,7 @@ bool check(){
     return flag;
 }
 
-//사다리에 선 추가하기
+// 사다리에 선 추가하기
 void dfs(int x, int y, int cnt){
     if(cnt >= ans) return;
     if(check()){
