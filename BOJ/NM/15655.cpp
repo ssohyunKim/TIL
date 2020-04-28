@@ -1,44 +1,52 @@
 #include <iostream>
 #include <algorithm>
+
 #define MAX 9
 using namespace std;
 
-int arr[MAX];
-bool check[MAX];
+// N개의 자연수 중에서 M개를 고른 수열
+// 고른 수열은 오름차순이어야 한다.
+
+int num[MAX];
+int pick[MAX];
+bool visited[MAX];
 int n, m;
 
-void DFS(int cnt){
-    if(cnt == m){
-        sort(arr, arr+m);
-        for(int i=0; i<m; i++){
-            cout << arr[i] << " ";
+void dfs(int cnt)
+{
+    if (cnt == m)
+    {
+        for (int i = 0; i < m; i++)
+        {
+            cout << pick[i] << " ";
         }
         cout << "\n";
         return;
     }
-    for(int i=0; i<n; i++){
-        if(check[i] == true){
-            continue;
-        }else{
-            check[i] = true;
-            arr[cnt] = arr[i];
-            DFS(cnt+1);
-            check[i] = false;
+    for (int i = 0; i < n; i++)
+    {
+        if (!visited[i] && num[i] >= pick[cnt-1])
+        {
+            visited[i] = true;
+            pick[cnt] = num[i];
+            dfs(cnt + 1);
+            visited[i] = false;
         }
     }
 }
-int main(int argc, const char * argv[]) {
-    // insert code here...
+int main()
+{
     ios_base::sync_with_stdio(false);
     cin.tie(0);
 
     cin >> n >> m;
-    
-    for(int i=0; i<n; i++){
-        cin >> arr[i];
+
+    for (int i = 0; i < n; i++)
+    {
+        cin >> num[i];
     }
-    sort(arr, arr+n);
-    DFS(0);
-    
+    sort(num, num + n);
+    dfs(0);
+
     return 0;
 }
