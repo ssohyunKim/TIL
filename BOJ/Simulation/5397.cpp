@@ -9,20 +9,20 @@ int main(){
     // - : 백스페이스 커서의 앞에 문자가 존재하면 지움
     // < > : 커서를 왼쪽 또는 오른쪽으로 1칸 움직임
     // 커서의 위치가 마지막이 아니면, 문자를 입력하고 커서는 오른쪽으로 한칸 이동함
-   
-    int n;
+
+    char str[1000001];
+    char temp[1000001];
+    char pwd[1000001];
+    int n, i, j, k;
+
     scanf("%d", &n);
 
     while(n--){
-        char str[1000001];
-        char temp[1000001];
-        char pwd[1000001];
 
         scanf("%s", str);
-        //str[1000000] = '\0';
 
-        int j, k = 0;
-        for(int i=0; str[i]; i++){
+        i=0, j=0; k=0;
+        for(; str[i]; i++){
             if(str[i]=='-'){
                 if(j>0) pwd[--j] = 0;
             }else if(str[i]=='<'){
@@ -34,9 +34,8 @@ int main(){
             }
         }
         while(k--) pwd[j++] = temp[k];
-        pwd[j]=0;
-        printf("%s", pwd);
-        printf("\n");
+        pwd[j] == 0;
+        printf("%s\n", pwd);
     }
     return 0;
 }
