@@ -9,7 +9,7 @@ using namespace std;
 
 int main(){
     ios_base::sync_with_stdio(false);
-    cin.tie(0);
+    cin.tie(0);g
 
     int n, kim, lee;
     int round = 0;
