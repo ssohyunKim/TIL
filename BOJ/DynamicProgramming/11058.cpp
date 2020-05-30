@@ -9,7 +9,7 @@ using namespace std;
 // 4. Ctrl-V: 버퍼가 비어있지 않은 경우에는 화면에 출력된 문자열의 바로 뒤에 버퍼의 내용을 붙여넣는다.
 
 int n;
-int dp[101];
+long long int dp[101]; // dp[i]:버튼을 총 i번 눌러서 화면에 출력된 개수의 최댓값
 int main(){
     ios_base::sync_with_stdio(false);
     cin.tie(0);
@@ -17,10 +17,15 @@ int main(){
     cin >> n;
 
     dp[1] = 1;
-    for(int i=2; i<=100; ++i){
-        dp[i] = dp[i-1]+1;
-        for(int j=1; j<i-2; ++j)
-            dp[i] = max(dp[i], dp[j] * (i-j-1));
+    dp[2] = 2;
+    dp[3] = 3;
+    dp[4] = 4;
+    dp[5] = 5;
+    dp[6] = 6;
+
+    for(int i=7; i<=n; ++i){
+        for(int j=3; i-j>0; ++j)
+            dp[i] = max(dp[i], (j-1) * dp[i-j]);
     }
 
     cout << dp[n] << "\n";
