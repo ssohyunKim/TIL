@@ -5,7 +5,7 @@
 #include <queue>
 
 using namespace std;
-bool check[20001];
+bool check[200001];
 
 int solution(vector<int> nums)
 {
