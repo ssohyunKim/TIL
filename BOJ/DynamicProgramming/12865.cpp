@@ -12,7 +12,7 @@ int main(){
     for(int i=0; i<N; i++){
         int w, v;
         cin >> w >> v;
-        profit.push_back(make_parir(w, v));
+        profit.push_back(make_pair(w, v));
     }
 
     for(int i=0; i<N; i++){
@@ -32,7 +32,7 @@ int main(){
             }
         }
     }
-    cout << ans[i-1][k] << "\n";
+    cout << ans[N-1][K] << "\n";
 
     return 0;
 }
